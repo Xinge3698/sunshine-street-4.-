@@ -6,40 +6,29 @@
     <title>阳光商业街区街景</title>
     <style>
         * { margin: 0; padding: 0; }
-        body { width: 100%; height: 100vh; background: #1a1a2e; color: #fff; font-family: sans-serif; }
+        body { width: 100%; height: 100vh; background: #1a1a2e; font-family: sans-serif; }
         #pano { width: 100%; height: 100%; }
-        .info { position: fixed; top: 10px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.6); padding: 8px 16px; border-radius: 20px; font-size: 14px; z-index: 100; }
-        .cities { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 100; }
+        .info { position: fixed; top: 10px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.6); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #fff; z-index: 100; }
+        .cities { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 100; flex-wrap: wrap; justify-content: center; }
         .btn { padding: 10px 16px; background: rgba(255,107,107,0.9); border: none; color: #fff; border-radius: 20px; cursor: pointer; font-size: 14px; }
     </style>
 </head>
 <body>
-    <div class="info">🏪 阳光商业街区</div>
+    <div class="info" id="info">🏪 阳光商业街区</div>
     <div id="pano"></div>
     <div class="cities">
-        <button class="btn" onclick="loadPano(112.9388,28.2282)">长沙</button>
-        <button class="btn" onclick="loadPano(116.4074,39.9042)">北京</button>
-        <button class="btn" onclick="loadPano(121.4737,31.2304)">上海</button>
-        <button class="btn" onclick="loadPano(114.0579,22.5431)">深圳</button>
+        <button class="btn" onclick="switchCity(116.409,39.915,'北京王府井')">北京</button>
+        <button class="btn" onclick="switchCity(121.487,31.234,'上海南京路')">上海</button>
+        <button class="btn" onclick="switchCity(114.059,22.543,'深圳东门')">深圳</button>
+        <button class="btn" onclick="switchCity(112.938,28.228,'长沙黄兴路')">长沙</button>
     </div>
 
-    <script src="https://map.qq.com/api/js?v=2.exp&key=OB4BZ-D4W3F-B7JWU-OXWEU-VE3WZ-JBFZ2"></script>
     <script>
-        function loadPano(lat, lng) {
-            var container = document.getElementById('pano');
-            container.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#1a1a2e;">加载中...</div>';
-            var myLatlng = new qq.maps.LatLng(lat, lng);
-            var panoClient = new qq.maps.PanoramaService();
-            panoClient.getPano(myLatlng, 500, function(result) {
-                if (result) {
-                    container.innerHTML = '';
-                    new qq.maps.Panorama(container, { pano: result.svid, heading: result.heading, pitch: result.pitch, zoom: 1 });
-                } else {
-                    container.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#1a1a2e;color:#888;">该区域暂无街景</div>';
-                }
-            });
+        function switchCity(lng, lat, name) {
+            document.getElementById('info').textContent = '🏪 ' + name;
+            document.getElementById('pano').innerHTML = '<iframe width="100%" height="100%" frameborder="0" src="https://map.baidu.com/ugc/photo/photo/list?qt=panorama&uid=' + lng + ',' + lat + '&heading=&pitch=&zoom=1" style="border:none;"></iframe>';
         }
-        loadPano(112.9388, 28.2282);
+        switchCity(116.409,39.915,'北京王府井');
     </script>
 </body>
 </html>
