@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>阳光商业街区街景</title>
+    <style>
+        * { margin: 0; padding: 0; }
+        body { width: 100%; height: 100vh; background: #1a1a2e; }
+        #pano { width: 100%; height: 100%; }
+    </style>
+</head>
+<body>
+    <div id="pano"></div>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=e44748ba0a1c2abb6708abc84c853e28"></script>
+    <script type="text/javascript">
+        function init() {
+            var panorama = new AMap.Panorama('pano', {
+                scene: 1,
+                panaromaJsonpVersion: '2.0'
+            });
+
+            AMap.Event.addListener(panorama, 'complete', function() {
+                panorama.setPanoramaAndRotate(112.9388, 28.2282, 0, 120, 0, false);
+            });
+        }
+
+        if (typeof AMap !== 'undefined') {
+            init();
+        } else {
+            window.onload = init;
+        }
+    </script>
+</body>
+</html>
